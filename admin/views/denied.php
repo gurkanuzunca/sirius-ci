@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="<?php echo base_url('/') ?>" />
+
+    <link rel="stylesheet" type="text/css" href="../public/admin/plugin/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../public/admin/plugin/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../public/admin/css/main.css" />
+    <?php if (isset($public['css'])): ?>
+        <?php foreach ($public['css'] as $css): ?>
+            <link rel="stylesheet" type="text/css" href="<?php echo $css ?>" />
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <script type="text/javascript" src="../public/admin/js/jquery.js"></script>
+    <script type="text/javascript" src="../public/admin/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../public/admin/js/bootstrap.filestyle.min.js"></script>
+    <?php if (isset($public['js'])): ?>
+        <?php foreach ($public['js'] as $js): ?>
+            <script type="text/javascript" src="<?php echo $js ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <script type="text/javascript" src="../public/admin/js/main.js"></script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements html5shiv.js -->
+    <!--[if lt IE 9]><script src="../public/admin/js/html5shiv.js'"></script><![endif]-->
+</head>
+<body>
+
+<div class="container" style="margin-top: 50px;">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="fa fa-warning"></i> Sayfaya erişim izniniz yok!</div>
+            <div class="panel-body text-center">
+                <a class="btn btn-primary btn-sm" href="<?php echo $this->input->server('HTTP_REFERER'); ?>">Geri Dön</a>
+                <a class="btn btn-success btn-sm" href="./">Panel Anasayfa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
