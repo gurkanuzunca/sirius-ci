@@ -41,7 +41,10 @@
     <div class="header-toolbar clearfix">
         <div class="navigation">
             <ul class="nav navbar-right">
-                <li class="dropdown">
+                <li data-toggle="tooltip" data-placement="left" title="Siteyi Göster">
+                    <a href="../" target="_blank"><i class="fa fa-globe"></i></a>
+                </li>
+                <li class="dropdown" data-toggle="tooltip" data-placement="left" title="Diller">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i></a>
                     <ul class="dropdown-menu">
                         <?php foreach ($this->config->item('languages') as $language => $value): ?>
@@ -56,21 +59,21 @@
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" data-toggle="tooltip" data-placement="left" title="Kullanıcılar">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="home/users"><i class="fa fa-user"></i> Kullanıcılar</a></li>
                         <li><a href="home/groups"><i class="fa fa-key"></i> Kullanıcı Grupları</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" data-toggle="tooltip" data-placement="left" title="Ayarlar">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="home/options">Site Ayarları</a></li>
                         <li><a href="module/records">Modül Ayarları</a></li>
                     </ul>
                 </li>
-                <li class="profile dropdown">
+                <li class="profile dropdown" data-toggle="tooltip" data-placement="left" title="Profil">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <img class="img-circle" src="../public/admin/img/avatar.png" />
                         <strong>Oturum</strong>
