@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sirius\\": "vendor/sirius/Sirius/",
+            "Sirius\\": "sirius/",
             "Controllers\\": "application/controllers/",
             "Admin\\Controllers\\": "admin/controllers/",
             "Models\\": "application/models/",
