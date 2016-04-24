@@ -428,7 +428,9 @@ class HomeAdminController extends Manager
             }
         }
 
-        $this->load->view('login');
+        $this->load->view('helpers/master', array(
+            'view' => 'helpers/home/login'
+        ));
     }
 
 
@@ -443,7 +445,9 @@ class HomeAdminController extends Manager
 
     public function denied()
     {
-        $this->load->view('denied');
+        $this->load->view('helpers/master', array(
+            'view' => 'helpers/home/denied'
+        ));
     }
 
 

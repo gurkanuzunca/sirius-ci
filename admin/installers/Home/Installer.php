@@ -6,6 +6,16 @@ use Sirius\Admin\Installer as InstallManager;
 class Installer extends InstallManager
 {
 
+    public $tables = array(
+        'admin_groups',
+        'admin_perms',
+        'admin_users',
+        'modules',
+        'module_arguments',
+        'menus',
+        'options',
+    );
+
     public $routes = array(
         'tr' => array(
             'uri' => './'

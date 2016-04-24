@@ -12,6 +12,12 @@ class Site
         $this->ci =& get_instance();
 
         /**
+         * Kurulumun yapılıp yapılmadığını kontrol eder.
+         * Kurulum yapılmadıysa kurulum ekranına geçer.
+         */
+        $this->isReady();
+
+        /**
          * Varsayılan dil atama
          */
         $languages = $this->ci->config->item('languages');
@@ -139,6 +145,15 @@ class Site
         }
 
         return $module;
+    }
+
+
+
+    public function isReady()
+    {
+        if (! $this->ci->db->table_exists('options')) {
+            redirect('admin/install');
+        }
     }
 
 

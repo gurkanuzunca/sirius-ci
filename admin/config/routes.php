@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "HomeAdminController";
 $route['install/([a-z_-]+)'] = 'InstallController/install/$1';
+$route['install'] = 'InstallController/start';
 $route['([a-z_-]+)/([a-zA-Z_-]+)(.*)?'] = '$1AdminController/$2';
 
 

@@ -5,40 +5,101 @@ class InstallController extends CI_Controller
 
     protected $provider;
     protected $module;
+    protected $messages = array();
+
+
+    public function start()
+    {
+        $this->load->view('install');
+    }
 
 
     public function install($module)
     {
-        require_once APPPATH .'/installers/'. ucfirst($module) .'/Installer.php';
+        $insrallerFile = APPPATH .'/installers/'. ucfirst($module) .'/Installer.php';
+
+        if (! file_exists($insrallerFile)) {
+            throw new Exception('Kurulum (installer) dosyasi bulunamadi.');
+        }
+
+        require_once $insrallerFile;
 
         $this->module = $module;
-        $this->provider = new \Installer();
+        $this->provider = new Installer();
 
-        $sqlFile = '';
-        if (file_exists(APPPATH .'/installers/'. ucfirst($module) .'/Database.sql')) {
-            $sqlFile = $this->load->file(APPPATH .'/installers/'. ucfirst($module) .'/Database.sql', true);
-        }
+        if (! $this->isInstalled()) {
 
-        if ($sqlFile) {
-            $queries = explode(';', $sqlFile);
 
-            foreach($queries as $query) {
-                $query = trim($query);
+            $sqlString = '';
+            if (file_exists(APPPATH .'/installers/'. ucfirst($module) .'/Database.sql')) {
+                $sqlString = $this->load->file(APPPATH .'/installers/'. ucfirst($module) .'/Database.sql', true);
+            }
 
-                if (! empty($query)) {
-                    $this->db->query("SET FOREIGN_KEY_CHECKS = 0");
-                    $this->db->query($query);
-                    $this->db->query("SET FOREIGN_KEY_CHECKS = 1");
+            if ($sqlString) {
+                $queries = explode(';', $sqlString);
+
+                foreach($queries as $query) {
+                    $query = trim($query);
+
+                    if (! empty($query)) {
+                        $this->db->query("SET FOREIGN_KEY_CHECKS = 0");
+                        $this->db->query($query);
+                        $this->db->query("SET FOREIGN_KEY_CHECKS = 1");
+                    }
                 }
             }
+
+            $this->saveModule();
+            $this->callMethods();
+            $this->addRoutes();
+            $this->addReservedUri();
+        };
+
+        $this->load->view('helpers/master', array(
+            'view' => 'helpers/install/install',
+            'data' => array(
+                'messages' => $this->messages
+            )
+        ));
+    }
+
+
+    private function isInstalled()
+    {
+        if (! $this->db->table_exists('modules')) {
+            return false;
         }
 
-        $this->saveModule();
-        $this->callMethods();
-        $this->addRoutes();
-        $this->addReservedUri();
+        $module = $this->db
+            ->from('modules')
+            ->where('name', $this->module)
+            ->get()
+            ->row();
 
+        if ($module) {
+            $this->messages[] = 'Modül kurulumu yapılmış.';
 
+            if (isset($this->provider->tables)) {
+
+                $missing = array();
+
+                foreach ($this->provider->tables as $table) {
+                    if (! $this->db->table_exists($table)) {
+                        $missing[] = $table;
+                    }
+                }
+
+                if (count($missing) > 0) {
+                    $this->messages[] = 'Modül kurulumu hatalı!';
+                    $this->messages[] = 'Eksik tablolar mevcut:';
+                    $this->messages[] = implode('<br>', $missing);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -55,6 +116,8 @@ class InstallController extends CI_Controller
             'menuPattern' => null,
             'controller' => '',
         ));
+
+        $this->messages[] = 'Modül kuruldu.';
     }
 
 
@@ -65,12 +128,6 @@ class InstallController extends CI_Controller
         if (! empty($this->provider->steps)) {
             foreach ($this->provider->steps as $step) {
                 if (method_exists($this->provider, $step)) {
-                    $methods[] = $step;
-                }
-            }
-        } else {
-            foreach (get_class_methods($this->provider) as $step) {
-                if (strpos($step, '__') === false) {
                     $methods[] = $step;
                 }
             }
@@ -88,7 +145,6 @@ class InstallController extends CI_Controller
         if (empty($this->provider->routes)) {
             return false;
         }
-
 
         $languages = $this->config->item('languages');
 
@@ -126,10 +182,9 @@ class InstallController extends CI_Controller
                 flock($file, LOCK_UN);
                 fclose($file);
 
+                $this->messages[] = 'Rotasyon yapıldı. ('. $label .')';
             }
-
         }
-
     }
 
 
@@ -153,9 +208,10 @@ class InstallController extends CI_Controller
                 flock($file, LOCK_UN);
                 fclose($file);
 
+
+                $this->messages[] = 'Rezerve url eklendi. ('. $label .')';
             }
         }
-
     }
 
 

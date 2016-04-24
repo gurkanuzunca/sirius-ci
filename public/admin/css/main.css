@@ -7,9 +7,8 @@ a {outline: none;}
 .checkbox label {line-height: 20px;}
 .radio label {line-height: 20px;}
 .image-thumbs {margin-bottom: 50px;}
+.margined {margin-top: 50px;}
 
-
-#login {margin-top: 50px;}
 #login i {width: 14px;}
 
 #header {height: 60px; margin: 0; width: 100%; z-index: 1030; position: fixed;}

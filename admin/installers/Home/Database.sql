@@ -60,8 +60,6 @@ INSERT INTO `admin_users` VALUES ('1', 'root', md5('root'), null);
 
 
 
-
-
 -- ----------------------------
 -- Table structure for `modules`
 -- ----------------------------
