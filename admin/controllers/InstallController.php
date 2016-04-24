@@ -10,7 +10,9 @@ class InstallController extends CI_Controller
 
     public function start()
     {
-        $this->load->view('install');
+        $this->load->view('helpers/master', array(
+            'view' => 'helpers/install/start'
+        ));
     }
 
 
