@@ -3,8 +3,9 @@
 class InstallController extends CI_Controller
 {
 
+    public $module;
+
     protected $provider;
-    protected $module;
     protected $messages = array();
 
 
