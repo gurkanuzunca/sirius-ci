@@ -35,6 +35,13 @@ abstract class Manager extends \CI_Controller
          * Modül belirtildiyse modül verileri kontrol edilir ve güncellenir.
          */
         if (! empty($this->module)) {
+
+            /**
+             * Kurulumun yapılıp yapılmadığını kontrol eder.
+             * Kurulum yapılmadıysa kurulum ekranına geçer.
+             */
+            $this->isReady();
+
             $this->checkModuleConfig();
             $this->load->model($this->model, 'appmodel');
         }
@@ -325,6 +332,17 @@ abstract class Manager extends \CI_Controller
 
         if (method_exists($this, $method)) {
             call_user_func_array(array($this, $method), $args);
+        }
+    }
+
+    /**
+     * Kurulumun yapılıp yapılmadığını kontrol eder.
+     * Kurulum yapılmadıysa kurulum ekranına geçer.
+     */
+    public function isReady()
+    {
+        if (! $this->db->table_exists('modules')) {
+            redirect('install');
         }
     }
 

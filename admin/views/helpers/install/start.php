@@ -5,7 +5,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Kurulum</div>
             <div class="panel-body">
-                <p>Ops! Sirius henüz kurulmamış. Kurulumu yapmak için devam edin.</p>
+                <p>Sirius henüz kurulmamış. Kurulumu yapmak için devam edin.</p>
             </div>
             <div class="panel-footer">
                 <a class="btn btn-success btn-sm" href="install/home">Sirius'u Kur</a>

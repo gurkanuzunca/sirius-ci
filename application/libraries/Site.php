@@ -148,7 +148,10 @@ class Site
     }
 
 
-
+    /**
+     * Kurulumun yapılıp yapılmadığını kontrol eder.
+     * Kurulum yapılmadıysa kurulum ekranına geçer.
+     */
     public function isReady()
     {
         if (! $this->ci->db->table_exists('options')) {
